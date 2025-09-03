@@ -3,6 +3,12 @@
   <app-input label="Apellido" type="text" [(model)]="lastName"></app-input>
   <app-input label="Email" type="email" [(model)]="email"></app-input>
   <app-input label="Contraseña" type="password" [(model)]="password"></app-input>
-  <app-select label="País" [options]="countryOptions" [(model)]="country"></app-select>
+
+  <app-select
+    label="País"
+    [options]="countryOptions"
+    [(model)]="country">
+  </app-select>
+
   <app-button text="Guardar" type="submit"></app-button>
 </form>

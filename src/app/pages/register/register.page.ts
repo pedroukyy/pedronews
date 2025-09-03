@@ -17,11 +17,29 @@ export class RegisterPage {
   ) {}
 
   async onRegister(formData: any) {
+    // Validación básica antes de registrar
+    if (!formData.name || !formData.lastName || !formData.country) {
+      this.ui.showToast('Completa nombre, apellido y nacionalidad', 'danger');
+      return;
+    }
+
     await this.ui.showLoading('Registrando usuario...');
-    await this.userService.register(formData);
+    const result = await this.userService.register({
+      name: formData.name,
+      lastName: formData.lastName,
+      email: formData.email,
+      password: formData.password,
+      country: formData.country
+    });
     await this.ui.hideLoading();
-    this.ui.showToast('Registro exitoso', 'success');
-    this.router.navigate(['/login']);
+
+    if (result) {
+      this.ui.showToast('Registro exitoso', 'success');
+      this.router.navigate(['/login']);
+    } else {
+      this.ui.showToast('Error al registrar usuario', 'danger');
+    }
   }
 }
+
 

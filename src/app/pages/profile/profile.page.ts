@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { UserService, User } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
 import { UiService } from 'src/app/services/ui.service';
@@ -9,8 +9,8 @@ import { UiService } from 'src/app/services/ui.service';
   styleUrls: ['./profile.page.scss'],
   standalone: false
 })
-export class ProfilePage implements OnInit {
-  userData: Partial<User> = {};
+export class ProfilePage {
+  user: User | null = null;
 
   constructor(
     private userService: UserService,
@@ -18,20 +18,13 @@ export class ProfilePage implements OnInit {
     private ui: UiService
   ) {}
 
-  async ngOnInit() {
-    const user = await this.userService.getUser();
-    if (user) {
-      this.userData = { ...user };
-    }
+  async ionViewWillEnter() {
+    this.user = await this.userService.getUser();
   }
 
-  async onUpdate(updatedData: any) {
-    await this.ui.showLoading('Guardando cambios...');
-    await this.userService.updateUser(updatedData);
-    await this.ui.hideLoading();
-    this.ui.showToast('Perfil actualizado correctamente', 'success');
-    this.router.navigate(['/home']);
+  async logout() {
+    await this.userService.logout();
+    this.ui.showToast('Sesión cerrada', 'success');
+    this.router.navigate(['/login']);
   }
-
- 
 }
