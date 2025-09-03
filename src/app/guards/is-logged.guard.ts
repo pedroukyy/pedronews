@@ -9,12 +9,11 @@ export class IsLoggedGuard implements CanActivate {
   constructor(private userService: UserService, private router: Router) {}
 
   async canActivate(): Promise<boolean> {
-    const user = await this.userService.getUser();
-    if (user) {
+    const loggedIn = await this.userService.isLoggedIn();
+    if (loggedIn) {
       this.router.navigate(['/home']);
       return false;
-    } else {
-      return true;
     }
+    return true;
   }
 }

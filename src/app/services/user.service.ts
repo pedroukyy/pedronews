@@ -16,13 +16,14 @@ export interface User {
 })
 export class UserService {
   private storageKey = 'pedronews_user';
+  private loggedInKey = 'pedronews_logged_in';
 
   constructor(
     private storage: StorageService,
     private encrypt: EncryptService
   ) {}
 
-  /** Registra un nuevo usuario */
+  /** Registra un nuevo usuario y NO lo deja logueado */
   async register(user: Omit<User, 'id'>): Promise<User | null> {
     if (!user.email || !user.password) {
       console.error('Datos de usuario incompletos');
@@ -34,6 +35,10 @@ export class UserService {
       const encryptedPassword = this.encrypt.encrypt(user.password);
       const newUser: User = { ...user, id, password: encryptedPassword };
       await this.storage.set(this.storageKey, newUser);
+
+      // Aseguramos que no quede logueado
+      await this.storage.remove(this.loggedInKey);
+
       return newUser;
     } catch (error) {
       console.error('Error registrando usuario:', error);
@@ -50,11 +55,20 @@ export class UserService {
       const matchEmail = savedUser.email === email;
       const matchPass = this.encrypt.compare(password, savedUser.password);
 
-      return matchEmail && matchPass;
+      if (matchEmail && matchPass) {
+        await this.storage.set(this.loggedInKey, true);
+        return true;
+      }
+      return false;
     } catch (error) {
       console.error('Error en login:', error);
       return false;
     }
+  }
+
+  /** Verifica si está logueado */
+  async isLoggedIn(): Promise<boolean> {
+    return (await this.storage.get<boolean>(this.loggedInKey)) === true;
   }
 
   /** Obtiene el usuario guardado */
@@ -70,9 +84,8 @@ export class UserService {
     await this.storage.set(this.storageKey, merged);
   }
 
-  /** Cierra sesión */
+  /** Cierra sesión (solo estado de login) */
   async logout() {
-    await this.storage.remove(this.storageKey);
+    await this.storage.remove(this.loggedInKey);
   }
 }
-

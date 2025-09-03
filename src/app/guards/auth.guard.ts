@@ -9,8 +9,8 @@ export class AuthGuard implements CanActivate {
   constructor(private userService: UserService, private router: Router) {}
 
   async canActivate(): Promise<boolean> {
-    const user = await this.userService.getUser();
-    if (user) {
+    const loggedIn = await this.userService.isLoggedIn();
+    if (loggedIn) {
       return true;
     } else {
       this.router.navigate(['/login']);
@@ -18,4 +18,3 @@ export class AuthGuard implements CanActivate {
     }
   }
 }
-
