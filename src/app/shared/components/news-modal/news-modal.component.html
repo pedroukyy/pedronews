@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ title }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <img *ngIf="imageUrl" [src]="imageUrl" alt="Imagen de la noticia" style="width: 100%; border-radius: 8px; margin-bottom: 1rem;">
+  <p>{{ description }}</p>
+  <ion-button expand="block" color="primary" (click)="openInBrowser()">
+    Ver noticia completa
+  </ion-button>
+</ion-content>

@@ -1,20 +1,23 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <ion-title>Noticias</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <!-- Noticia principal -->
+  <app-principal-news
+    *ngIf="principalNews"
+    [title]="principalNews.title"
+    [imageUrl]="principalNews.urlToImage">
+  </app-principal-news>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <!-- Otras noticias -->
+  <app-card
+    *ngFor="let news of otherNews"
+    [title]="news.title"
+    [description]="news.description"
+    [imageUrl]="news.urlToImage">
+  </app-card>
 </ion-content>
+

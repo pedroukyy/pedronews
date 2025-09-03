@@ -1,3 +1,66 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <!-- Menú lateral -->
+  <ion-menu contentId="main-content" type="overlay">
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-title>Menú</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-list>
+        <!-- Categorías -->
+        <ion-list-header>
+          Categorías de Noticias
+        </ion-list-header>
+
+        <ion-menu-toggle auto-hide="true">
+          <ion-item button (click)="selectCategory('technology')">
+            <ion-icon name="laptop-outline" slot="start"></ion-icon>
+            <ion-label>Tecnología</ion-label>
+          </ion-item>
+          <ion-item button (click)="selectCategory('sports')">
+            <ion-icon name="football-outline" slot="start"></ion-icon>
+            <ion-label>Deportes</ion-label>
+          </ion-item>
+          <ion-item button (click)="selectCategory('business')">
+            <ion-icon name="briefcase-outline" slot="start"></ion-icon>
+            <ion-label>Negocios</ion-label>
+          </ion-item>
+          <ion-item button (click)="selectCategory('health')">
+            <ion-icon name="medkit-outline" slot="start"></ion-icon>
+            <ion-label>Salud</ion-label>
+          </ion-item>
+          <ion-item button (click)="selectCategory('entertainment')">
+            <ion-icon name="film-outline" slot="start"></ion-icon>
+            <ion-label>Entretenimiento</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <!-- Perfil -->
+        <ion-list-header>
+          Usuario
+        </ion-list-header>
+        <ion-menu-toggle auto-hide="true">
+          <ion-item routerLink="/profile">
+            <ion-icon name="person-outline" slot="start"></ion-icon>
+            <ion-label>Perfil</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <!-- Logout -->
+        <ion-menu-toggle auto-hide="true">
+          <ion-item button (click)="logout()">
+            <ion-icon name="log-out-outline" slot="start"></ion-icon>
+            <ion-label>Cerrar sesión</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <!-- Contenido principal -->
+  <div class="ion-page" id="main-content">
+    <ion-router-outlet></ion-router-outlet>
+  </div>
 </ion-app>

@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <!-- Botón para abrir el menú lateral -->
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Noticias
+      <span *ngIf="currentCategory"> - {{ currentCategory | titlecase }}</span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Refresher para actualizar -->
+  <ion-refresher slot="fixed" (ionRefresh)="refreshNews($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-down"
+      pullingText="Desliza para actualizar"
+      refreshingSpinner="circles"
+      refreshingText="Actualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <!-- Noticia principal -->
+  <app-principal-news
+    *ngIf="principalNews"
+    [title]="principalNews.title"
+    [imageUrl]="principalNews.urlToImage"
+    (click)="openNewsModal(principalNews)">
+  </app-principal-news>
+
+  <!-- Lista de otras noticias -->
+  <app-card
+    *ngFor="let news of otherNews"
+    [title]="news.title"
+    [description]="news.description"
+    [imageUrl]="news.urlToImage"
+    (click)="openNewsModal(news)">
+  </app-card>
+
+  <!-- Mensaje si no hay noticias -->
+  <div *ngIf="!principalNews && otherNews.length === 0" class="no-news">
+    <ion-icon name="alert-circle-outline"></ion-icon>
+    <p>No hay noticias disponibles para esta categoría.</p>
+  </div>
+</ion-content>

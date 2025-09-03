@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Mi Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Formulario de usuario para edición -->
+  <app-user-form
+    *ngIf="userData"
+    [initialData]="userData"
+    (formSubmit)="onUpdate($event)">
+  </app-user-form>
+
+  
+</ion-content>

@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Registro</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Formulario de usuario para registro -->
+  <app-user-form (formSubmit)="onRegister($event)"></app-user-form>
+</ion-content>
+
+<ion-button expand="block" fill="clear" routerLink="/login">
+  Ya tengo cuenta
+</ion-button>

@@ -1,0 +1,29 @@
+ion-content {
+  --background: var(--ion-color-light);
+}
+
+.no-news {
+  text-align: center;
+  color: var(--ion-color-medium);
+  margin-top: 2rem;
+
+  ion-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: var(--ion-color-warning);
+  }
+
+  p {
+    font-size: 1rem;
+  }
+}
+
+app-principal-news {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+app-card {
+  display: block;
+  margin-bottom: 0.75rem;
+}
